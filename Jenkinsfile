@@ -8,5 +8,17 @@ pipeline {
                 """
             }
         }
+        stage("Tests") {
+            steps {
+                sh """
+                    ./mvnw test
+                """
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                }
+            }
+        }
     }
 }

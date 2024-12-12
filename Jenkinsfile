@@ -17,8 +17,7 @@ pipeline {
             post {
                 always {
                     script {
-                      junit '**/testResult/*.xml'
-//                         def testResult = junit '**/target/generated-test-sources/TEST-*.xml'
+                        def testResult = junit '**/testResult/*.xml'
 
                         echo "Total Tests: ${testResult.totalCount}"
                         echo "Passed Tests: ${testResult.passCount}"

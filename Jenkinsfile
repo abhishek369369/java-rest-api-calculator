@@ -17,11 +17,12 @@ pipeline {
             post {
                 always {
                     script {
-                        print("Total Tests : " + currentBuild.testResultObject.totalCount)
-                        print("Total Tests : " + currentBuild.testResultObject.passCount)
-                        print("Total Tests : " + currentBuild.testResultObject.failCount)
-                        print("Total Tests : " + currentBuild.testResultObject.skipCount)
-                        junit '**/target/generated-test-sources/TEST-*.xml'
+                        def testResult = junit '**/target/generated-test-sources/TEST-*.xml'
+
+                        echo "Total Tests: ${testResult.totalCount}"
+                        echo "Passed Tests: ${testResult.passCount}"
+                        echo "Failed Tests: ${testResult.failCount}"
+                        echo "Skipped Tests: ${testResult.skipCount}"
                     }
                 }
             }

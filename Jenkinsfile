@@ -4,7 +4,7 @@ pipeline {
         stage("Compile") {
             steps {
                 sh """
-                    ./mvnw clean compile
+                    mvn clean install -Dmaven.test.skip=true -Dspring.profiles.active=descope -Ddependency-check.skip -Djacoco.skip -Dpmd.skip -Dspotbugs.skip -Dcheckstyle.skip
                 """
             }
         }

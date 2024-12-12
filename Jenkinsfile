@@ -14,11 +14,6 @@ pipeline {
                     ./mvnw test -Dmaven.test.failure.ignore=true
                 """
             }
-            post {
-                always {
-                    junit '**/target/generated-test-sources/TEST-*.xml'
-                }
-            }
         }
     }
 }

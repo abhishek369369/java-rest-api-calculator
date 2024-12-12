@@ -16,11 +16,13 @@ pipeline {
             }
             post {
                 always {
-                    print("Total Tests : " + currentBuild.testResultObject.totalCount)
-                    print("Total Tests : " + currentBuild.testResultObject.passCount)
-                    print("Total Tests : " + currentBuild.testResultObject.failCount)
-                    print("Total Tests : " + currentBuild.testResultObject.skipCount)
-                    junit '**/target/generated-test-sources/TEST-*.xml'
+                    script {
+                        print("Total Tests : " + currentBuild.testResultObject.totalCount)
+                        print("Total Tests : " + currentBuild.testResultObject.passCount)
+                        print("Total Tests : " + currentBuild.testResultObject.failCount)
+                        print("Total Tests : " + currentBuild.testResultObject.skipCount)
+                        junit '**/target/generated-test-sources/TEST-*.xml'
+                    }
                 }
             }
         }

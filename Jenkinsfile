@@ -19,6 +19,7 @@ pipeline {
                     script {
                         def testResult = junit '**/target/surefire-reports/TEST-*.xml'
 
+
                         echo "Total Tests: ${testResult.totalCount}"
                         echo "Passed Tests: ${testResult.passCount}"
                         echo "Failed Tests: ${testResult.failCount}"

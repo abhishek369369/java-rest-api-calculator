@@ -1,10 +1,12 @@
 pipeline {
     agent any
     stages {
-        script {
-            sh """
-                ./mvnw clean compile
-            """
+        stage("Compile") {
+            steps {
+                sh """
+                    ./mvnw clean compile
+                """
+            }
         }
     }
 }

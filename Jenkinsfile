@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    parameters {
+      choice(name: 'deployment_type',choices: ['green', 'blue'], description: 'Select the deployment type.')
+    }
+    tools {
+        maven 'maven-3.9.2'
+        jdk 'JDK-11.0.22'
+    }
     stages {
         stage("Compile") {
             steps {

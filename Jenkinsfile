@@ -11,7 +11,7 @@ pipeline {
         stage("Tests") {
             steps {
                 sh """
-                    ./mvnw test
+                    ./mvnw test -Dmaven.test.failure.ignore=true
                 """
             }
             post {

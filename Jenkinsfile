@@ -11,7 +11,7 @@ pipeline {
         stage("Tests") {
             steps {
                 sh """
-                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true surefire-report:report-only
+                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true surefire-report:report
                 """
             }
             post {

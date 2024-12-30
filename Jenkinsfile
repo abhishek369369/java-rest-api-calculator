@@ -11,13 +11,13 @@ pipeline {
         stage("Tests") {
             steps {
                 sh """
-                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true surefire-report:report
+                    ./mvnw clean test -Dtest=**/*test.java -Dmaven.test.failure.ignore=true surefire-report:report
                 """
             }
             post {
                 always {
                     script {
-                        def testResult = junit '**/target/surefire-reports/TEST-*.xml'
+                        def testResult = junit '**/target/surefire-reports/tEST-*.xml'
 
 
                         echo "Total Tests: ${testResult.totalCount}"

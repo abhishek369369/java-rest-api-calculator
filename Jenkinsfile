@@ -17,7 +17,7 @@ pipeline {
             post {
                 always {
                     script {
-                        def testResult = junit '**/target/surefire-reports/tEST-*.xml'
+                        def testResult = junit '**/target/surefire-reports/TEST-*.xml'
 
 
                         echo "Total Tests: ${testResult.totalCount}"

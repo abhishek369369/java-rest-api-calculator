@@ -26,6 +26,7 @@ pipeline {
                         echo "Skipped Tests: ${testResult.skipCount}"
                     }
                 }
+            }
         }
     }
 }

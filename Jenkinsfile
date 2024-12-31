@@ -26,17 +26,6 @@ pipeline {
                         echo "Skipped Tests: ${testResult.skipCount}"
                     }
                 }
-            }
-        }
-        stage("Publish Reports") {
-            steps {
-                publishHTML (target : [allowMissing: false,
-                 alwaysLinkToLastBuild: true,
-                 keepAll: true,
-                 reportDir: 'reports',
-                 reportFiles: '**/target/surefire-reports/TEST-*.xml',
-                 reportName: 'TEST-*.xml'])
-            }
         }
     }
 }

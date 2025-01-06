@@ -11,7 +11,7 @@ pipeline {
         stage("Tests") {
             steps {
                 sh """
-                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -DfailIfNoTests=false surefire-report:report
+                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -DfailIfNoTests=false surefire-report:report jacoco:report
                 """
             }
             post {

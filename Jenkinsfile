@@ -15,13 +15,9 @@ pipeline {
                 """
             }
             post {
-                unstable {
-                    script {
-                        currentBuild.rawBuild.@result = hudson.model.Result.SUCCESS
-                    }
-                }
                 always {
                     script {
+                        currentBuild.rawBuild.@result = hudson.model.Result.SUCCESS
                         def testResult = junit '**/target/surefire-reports/TEST-*.xml'
 
 

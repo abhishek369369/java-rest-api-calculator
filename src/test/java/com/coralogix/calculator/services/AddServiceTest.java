@@ -36,6 +36,6 @@ public class AddServiceTest {
     public void addTest3(){
         AddService service = new AddService();
         Result res = service.add(10,10);
-        assertEquals(res.getResult(), 30);
+        assertEquals(res.getResult(), 20);
     }
 }

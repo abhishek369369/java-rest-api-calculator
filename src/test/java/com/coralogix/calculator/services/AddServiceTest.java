@@ -19,7 +19,7 @@ public class AddServiceTest {
     }
 
     @Test
-    public void addTest() {
+    public void addTest1() {
         AddService service = new AddService();
         Result result = service.add(5, 5);
         assertEquals(result.getResult(), 10);
@@ -30,5 +30,12 @@ public class AddServiceTest {
         AddService service = new AddService();
         Result res = service.add(10,10);
         assertEquals(res.getResult(), 20);
+    }
+
+    @Test
+    public void addTest3(){
+        AddService service = new AddService();
+        Result res = service.add(10,10);
+        assertEquals(res.getResult(), 30);
     }
 }

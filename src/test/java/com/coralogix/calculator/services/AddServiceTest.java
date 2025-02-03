@@ -28,8 +28,8 @@ public class AddServiceTest {
     @Test
     public void addTest2(){
         AddService service = new AddService();
-        Result res = service.add(10,10);
-        assertEquals(res.getResult(), 20);
+        Result res = service.add(10,15);
+        assertEquals(res.getResult(), 25);
     }
 
     @Test

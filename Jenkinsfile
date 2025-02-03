@@ -28,5 +28,12 @@ pipeline {
                 }
             }
         }
+        stage("Step after tests"){
+            steps {
+                script{
+                    echo "--------------------LAST STAGE------------------"
+                }
+            }
+        }
     }
 }

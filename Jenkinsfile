@@ -12,10 +12,11 @@ tpipeline {
         }
         stage("Tests") {
             steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                 sh """
                     ./mvnw test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
                 """
-                currentBuild.result = 'UNSTABLE'
+                }
             }
             post {
                 always {

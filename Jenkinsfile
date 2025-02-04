@@ -11,13 +11,12 @@ pipeline {
         stage("Tests") {
             steps {
                 sh """
-                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
+                    ./mvnw test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
                 """
             }
             post {
                 always {
                     script {
-                        currentBuild.rawBuild.@result = hudson.model.Result.SUCCESS
                         def testResult = junit '**/target/surefire-reports/TEST-*.xml'
 
 

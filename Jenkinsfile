@@ -6,6 +6,8 @@ pipeline {
                 sh """
                     ./mvnw clean install
                 """
+
+                echo "|||||||||||||||||||||||  FIRST STAGE END ||||||||||||||||||||||||||||"
             }
         }
         stage("Tests") {
@@ -24,6 +26,8 @@ pipeline {
                         echo "Passed Tests: ${testResult.passCount}"
                         echo "Failed Tests: ${testResult.failCount}"
                         echo "Skipped Tests: ${testResult.skipCount}"
+
+                        echo "????????????????????????  SECOND STAGE END  ?????????????????????????"
                     }
                 }
             }

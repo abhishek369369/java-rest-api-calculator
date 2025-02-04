@@ -1,4 +1,4 @@
-pipeline {
+tpipeline {
     agent any
     stages {
         stage("Compile") {
@@ -15,7 +15,7 @@ pipeline {
                 sh """
                     ./mvnw test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
                 """
-                currentBuild.currentResult = 'UNSTABLE'
+                currentBuild.result = 'UNSTABLE'
             }
             post {
                 always {
@@ -27,6 +27,8 @@ pipeline {
                         echo "Passed Tests: ${testResult.passCount}"
                         echo "Failed Tests: ${testResult.failCount}"
                         echo "Skipped Tests: ${testResult.skipCount}"
+
+                        currentBuild.result = 'SUCCESS'
 
                         echo "????????????????????????  SECOND STAGE END  ?????????????????????????"
                     }

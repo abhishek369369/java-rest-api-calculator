@@ -12,11 +12,9 @@ tpipeline {
         }
         stage("Tests") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                 sh """
                     ./mvnw test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
                 """
-                }
             }
             post {
                 always {
@@ -29,7 +27,6 @@ tpipeline {
                         echo "Failed Tests: ${testResult.failCount}"
                         echo "Skipped Tests: ${testResult.skipCount}"
 
-                        currentBuild.result = 'SUCCESS'
 
                         echo "????????????????????????  SECOND STAGE END  ?????????????????????????"
                     }

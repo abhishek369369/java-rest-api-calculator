@@ -45,7 +45,7 @@ pipeline {
                 ]){
                         sh """
                             echo "Content of the secret file:"
-                            cat $secret_file
+                            cat $secret-file
                         """
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {

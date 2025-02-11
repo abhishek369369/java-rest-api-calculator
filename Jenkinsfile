@@ -32,7 +32,21 @@ pipeline {
                                     """
                                 }
                             }
-                            echo "THE FILE IS : ${lumberfi-clients-dev-credentials}"
+                            //here print the acumatica server url
+                            //here print the paycor api key
+
+                            // Read the secret file content
+                            def secretFileContent = readFile(file: env.dev_secret_file)
+                                                        
+                            // Parse the content to get individual values
+                            def properties = secretFileContent.split('\n').collectEntries { line ->
+                                def parts = line.split('=').collect { it.trim() }
+                                [(parts[0]): parts[1]]
+                            }
+                            
+                            // Print the values
+                            echo "Acumatica Server URL: ${properties['ACUMATICA_SERVER_URL']}"
+                            echo "Paycor API Key: ${properties['PAYCOR_API_KEY']}"
                         }
                 }
             }

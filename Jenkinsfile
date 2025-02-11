@@ -1,14 +1,10 @@
-@Library('jenkins-lib') _
-import java.util.Properties;
 pipeline {
     agent any
 
     parameters {
       choice(name: 'run_tests',choices: ['no', 'yes'], description: 'Do you want to run the test cases')
     }
-    environment {
-        
-    }
+    
     stages {
         stage("Compile") {
             steps {

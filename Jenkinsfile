@@ -46,6 +46,7 @@ pipeline {
                         // Debug: Print the path of the secret file
                         echo "hello"
                         echo "Secret file path: ${SECRET_FILE}"
+                        cat ${SECRET_FILE}
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                             if(params.run_tests == 'yes'){

@@ -21,14 +21,18 @@ pipeline {
             }
             
             steps {
-                script{
-                    catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                        if(params.run_tests == 'yes'){
-                            sh """
-                                ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
-                            """
+                withCredentials([
+                    string(credentialsId: 'lumberfi-clients-dev-credentials', variable: '')
+                ]){
+                        script{
+                            catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                                if(params.run_tests == 'yes'){
+                                    sh """
+                                        ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
+                                    """
+                                }
+                            }
                         }
-                    }
                 }
             }
             post {

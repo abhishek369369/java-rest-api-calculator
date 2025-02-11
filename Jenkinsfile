@@ -30,7 +30,7 @@ pipeline {
             }
             
             steps {
-                script{
+                step{
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
                     if(env.BRANCH_NAME == 'main'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS

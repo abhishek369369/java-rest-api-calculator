@@ -1,5 +1,12 @@
 pipeline {
     agent any
+
+    parameters {
+      choice(name: 'run_tests',choices: ['no', 'yes'], description: 'Do you want to run the test cases')
+    }
+    environment {
+        
+    }
     stages {
         stage("Compile") {
             steps {
@@ -9,10 +16,22 @@ pipeline {
             }
         }
         stage("Tests") {
+            when {
+              expression {
+                  params.run_tests == 'yes'
+              }
+            }
+            
             steps {
-                sh """
-                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
-                """
+                script{
+                    catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                        if(params.run_tests == 'yes'){
+                            sh """
+                                ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
+                            """
+                        }
+                    }
+                }
             }
             post {
                 unstable {

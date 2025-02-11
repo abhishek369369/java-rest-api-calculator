@@ -1,3 +1,5 @@
+@Library('jenkins-lib') _
+import java.util.Properties;
 pipeline {
     agent any
 

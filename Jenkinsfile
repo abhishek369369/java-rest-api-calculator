@@ -41,10 +41,11 @@ pipeline {
                     }
                 
                 withCredentials([
-                    file(credentialsId: envClientCredentials, variable: 'secret-file')
+                    file(credentialsId: envClientCredentials, variable: 'SECRET_FILE')
                 ]){
                         // Debug: Print the path of the secret file
                         echo "hello"
+                        echo "Secret file path: ${SECRET_FILE}"
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                             if(params.run_tests == 'yes'){

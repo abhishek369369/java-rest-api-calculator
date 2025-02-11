@@ -32,7 +32,7 @@ pipeline {
                                     """
                                 }
                             }
-                            echo "THE FILE IS : ${dev-secret-file}"
+                            echo "THE FILE IS : ${lumberfi-clients-dev-credentials}"
                         }
                 }
             }

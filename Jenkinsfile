@@ -19,14 +19,6 @@ pipeline {
                     sh """
                         ./mvnw clean install
                     """
-
-                    if(env.BRANCH_NAME == 'main'){
-                        print("Inside main branch")
-                        env.CLIENT_CREDENTIALS = "${CLIENT_PROD_CREDENTIALS}"
-                    } else if(env.BRANCH_NAME == 'develop'){
-                        print("Inside develop brach")
-                        env.CLIENT_CREDENTIALS = "${CLIENT_DEV_CREDENTIALS}"
-                    }
                 }
             }
         }
@@ -38,8 +30,17 @@ pipeline {
             }
             
             steps {
+                def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
+                if(env.BRANCH_NAME == 'main'){
+                    envClientCredentials = env.CLIENT_PROD_CREDENTIALS
+                } else if(env.BRANCH_NAME == 'qa'){
+                    envClientCredentials = env.CLIENT_QA_CREDENTIALS
+                } else if(env.BRANCH_NAME == 'stage'){
+                    envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
+                }
+                
                 withCredentials([
-                    file(credentialsId: 'lumberfi-clients-dev-credentials', variable: 'dev-secret-file')
+                    file(credentialsId: envClientCredentials, variable: 'secret-file')
                 ]){
                         script{
                             catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {

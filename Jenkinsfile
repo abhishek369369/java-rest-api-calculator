@@ -30,6 +30,7 @@ pipeline {
             }
             
             steps {
+                script{
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
                     if(env.BRANCH_NAME == 'main'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
@@ -42,15 +43,14 @@ pipeline {
                 withCredentials([
                     file(credentialsId: envClientCredentials, variable: 'secret-file')
                 ]){
-                        script{
-                            catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                                if(params.run_tests == 'yes'){
-                                    sh """
-                                        ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
-                                    """
-                                }
+                        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                            if(params.run_tests == 'yes'){
+                                sh """
+                                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
+                                """
                             }
                         }
+                    }
                 }
             }
             post {

@@ -30,7 +30,6 @@ pipeline {
             }
             
             steps {
-                step{
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
                     if(env.BRANCH_NAME == 'main'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
@@ -39,7 +38,6 @@ pipeline {
                     } else if(env.BRANCH_NAME == 'stage'){
                         envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
                     }
-                }
                 
                 withCredentials([
                     file(credentialsId: envClientCredentials, variable: 'secret-file')

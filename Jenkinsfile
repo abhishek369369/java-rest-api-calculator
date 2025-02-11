@@ -3,11 +3,10 @@ tpipeline {
     stages {
         stage("Compile") {
             steps {
+                echo "STAGE 1"
                 sh """
                     ./mvnw clean install
                 """
-
-                echo "|||||||||||||||||||||||  FIRST STAGE END ||||||||||||||||||||||||||||"
             }
         }
         stage("Tests") {

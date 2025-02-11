@@ -32,18 +32,6 @@ pipeline {
                                     """
                                 }
                             }
-                            //here print the acumatica server url
-                            //here print the paycor api key
-
-                            def secretContent = readFile("${dev-secret-file}")
-
-                        // Extract ACUMATICA_SERVER_URL and PAYCOR_API_KEY
-                        def acumaticaServerUrl = secretContent.find(/ACUMATICA_SERVER_URL\s*=\s*(.*)/) { it[1] }
-                        def paycorApiKey = secretContent.find(/PAYCOR_API_KEY\s*=\s*(.*)/) { it[1] }
-
-                        // Print the values
-                        echo "ACUMATICA_SERVER_URL: ${acumaticaServerUrl}"
-                        echo "PAYCOR_API_KEY: ${paycorApiKey}"
                         }
                 }
             }

@@ -22,7 +22,7 @@ pipeline {
             
             steps {
                 withCredentials([
-                    file(credentialsId: 'lumberfi-clients-dev-credentials', variable: '')
+                    file(credentialsId: 'lumberfi-clients-dev-credentials', variable: 'dev-secret-file')
                 ]){
                         script{
                             catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
@@ -32,6 +32,7 @@ pipeline {
                                     """
                                 }
                             }
+                            echo "THE FILE IS : ${dev-secret-file}"
                         }
                 }
             }

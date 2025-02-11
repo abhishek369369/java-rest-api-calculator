@@ -4,13 +4,30 @@ pipeline {
     parameters {
       choice(name: 'run_tests',choices: ['no', 'yes'], description: 'Do you want to run the test cases')
     }
+
+    environment{
+        CLIENT_DEV_CREDENTIALS = "lumberfi-clients-dev-credentials"
+        CLIENT_QA_CREDENTIALS = "lumberfi-clients-qa-credentials"
+        CLIENT_STAGE_CREDENTIALS = "lumberfi-clients-stage-credentials"
+        CLIENT_PROD_CREDENTIALS = "lumberfi-clients-prod-credentials"
+    }
     
     stages {
         stage("Compile") {
             steps {
-                sh """
-                    ./mvnw clean install
-                """
+                script{
+                    sh """
+                        ./mvnw clean install
+                    """
+
+                    if(env.BRANCH_NAME == 'main'){
+                        print("Inside main branch")
+                        env.CLIENT_CREDENTIALS = "${CLIENT_PROD_CREDENTIALS}"
+                    } else if(env.BRANCH_NAME == 'develop'){
+                        print("Inside develop brach")
+                        env.CLIENT_CREDENTIALS = "${CLIENT_DEV_CREDENTIALS}"
+                    }
+                }
             }
         }
         stage("Tests") {

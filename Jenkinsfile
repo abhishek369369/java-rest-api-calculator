@@ -46,7 +46,7 @@ pipeline {
                         echo "hello"
 
                         //print the first name of the envClientCredntials here
-                        if(env.BRANCH_NAME == 'dev'){
+                        if(env.BRANCH_NAME == 'develop'){
                             echo "Credentials of DEV"
                         } else if(env.BRANCH_NAME == 'qa'){
                             echo "Credentials of QA"

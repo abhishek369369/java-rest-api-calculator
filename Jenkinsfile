@@ -52,7 +52,7 @@ pipeline {
                             echo "Credentials of QA"
                         } else if(env.BRANCH_NAME == 'stage'){
                             echo "Credentials of STAGE"
-                        } else if(env.BRANCH_NAME = 'main'){
+                        } else if(env.BRANCH_NAME == 'main'){
                             echo "Credentials of PROD"
                         }
                     

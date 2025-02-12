@@ -46,6 +46,15 @@ pipeline {
                         echo "hello"
 
                         //print the first name of the envClientCredntials here
+                        if(env.BRANCH_NAME == 'dev'){
+                            echo "Credentials of DEV"
+                        } else if(env.BRANCH_NAME == 'qa'){
+                            echo "Credentials of QA"
+                        } else if(env.BRANCH_NAME == 'stage'){
+                            echo "Credentials of STAGE"
+                        } else if(env.BRANCH_NAME = 'main'){
+                            echo "Credentials of PROD"
+                        }
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                             if(params.run_tests == 'yes'){

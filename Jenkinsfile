@@ -31,14 +31,15 @@ pipeline {
             
             steps {
                 script{
+                    echo "hello 1"
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
-                    if(BRANCH_NAME == 'master'){
+                    if(env.BRANCH_NAME == 'master'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
-                    } else if(BRANCH_NAME == 'qa'){
+                    } else if(env.BRANCH_NAME == 'qa'){
                         envClientCredentials = env.CLIENT_QA_CREDENTIALS
-                    } else if(BRANCH_NAME == 'stage'){
+                    } else if(env.BRANCH_NAME == 'stage'){
                         envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
-                    } else if(BRANCH_NAME == 'main'){
+                    } else if(env.BRANCH_NAME == 'main'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
                     }
                 
@@ -48,18 +49,17 @@ pipeline {
                     string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentials'),
                     string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentials')
                 ]){
-                        echo "hello"
+                        echo "hello 2"
 
-                        //print the first name of the envClientCredntials here
-                        if(BRANCH_NAME == 'develop'){
+                        if(env.BRANCH_NAME == 'develop'){
                             echo "Credentials of DEV"
-                        } else if(BRANCH_NAME == 'qa'){
+                        } else if(env.BRANCH_NAME == 'qa'){
                             echo "Credentials of QA"
-                        } else if(BRANCH_NAME == 'stage'){
+                        } else if(env.BRANCH_NAME == 'stage'){
                             echo "Credentials of STAGE"
-                        } else if(BRANCH_NAME == 'master'){
+                        } else if(env.BRANCH_NAME == 'master'){
                             echo "Credentials of PROD"
-                        } else if(BRANCH_NAME == 'main'){
+                        } else if(env.BRANCH_NAME == 'main'){
                             echo "Credentials of Prod"
                         }
                     

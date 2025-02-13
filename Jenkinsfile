@@ -19,14 +19,6 @@ pipeline {
                     sh """
                         ./mvnw clean install
                     """
-
-                    if(env.BRANCH_NAME == 'main'){
-                        print("Inside main branch")
-                        env.CLIENT_CREDENTIALS = "${CLIENT_PROD_CREDENTIALS}"
-                    } else if(env.BRANCH_NAME == 'develop'){
-                        print("Inside develop brach")
-                        env.CLIENT_CREDENTIALS = "${CLIENT_DEV_CREDENTIALS}"
-                    }
                 }
             }
         }
@@ -38,18 +30,53 @@ pipeline {
             }
             
             steps {
+                script{
+                    echo "hello 1"
+                    def branch_name = 'noBranch'
+                    if(env.BRANCH_NAME){
+                        branch_name = env.BRANCH_NAME
+                    }
+                    echo "Branch name is : ${branch_name}"
+                    def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
+                    if(env.BRANCH_NAME == 'master'){
+                        envClientCredentials = env.CLIENT_PROD_CREDENTIALS
+                    } else if(env.BRANCH_NAME == 'qa'){
+                        envClientCredentials = env.CLIENT_QA_CREDENTIALS
+                    } else if(env.BRANCH_NAME == 'stage'){
+                        envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
+                    } else if(env.BRANCH_NAME == 'main'){
+                        envClientCredentials = env.CLIENT_PROD_CREDENTIALS
+                    }
+                
                 withCredentials([
-                    file(credentialsId: 'lumberfi-clients-dev-credentials', variable: 'dev-secret-file')
+                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'lumberfi-clients-dev-credentials'),
+                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'lumberfi-clients-qa-credentials'),
+                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentials'),
+                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentials')
                 ]){
-                        script{
-                            catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                                if(params.run_tests == 'yes'){
-                                    sh """
-                                        ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
-                                    """
-                                }
+                        
+
+                        if(env.BRANCH_NAME == 'develop'){
+                            echo "Credentials of DEV"
+                        } else if(env.BRANCH_NAME == 'qa'){
+                            echo "Credentials of QA"
+                        } else if(env.BRANCH_NAME == 'stage'){
+                            echo "Credentials of STAGE"
+                        } else if(env.BRANCH_NAME == 'master'){
+                            echo "Credentials of PROD"
+                        } else if(env.BRANCH_NAME == 'main'){
+                            echo "Credentials of Prod"
+                        }
+                        echo "hello 2"
+                    
+                        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+                            if(params.run_tests == 'yes'){
+                                sh """
+                                    ./mvnw clean test -Dtest=**/*Test.java -Dmaven.test.failure.ignore=true -Djacoco.skip=false -DfailIfNoTests=false surefire-report:report jacoco:report
+                                """
                             }
                         }
+                    }
                 }
             }
             post {

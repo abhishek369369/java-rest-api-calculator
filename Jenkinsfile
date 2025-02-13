@@ -41,10 +41,10 @@ pipeline {
                     }
                 
                 withCredentials([
-                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'dev_variable'),
-                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'qa_variable'),
-                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'stage_variable'),
-                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'prod_variable')
+                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'lumberfi-clients-dev-credentials'),
+                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'lumberfi-clients-qa-credentials'),
+                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentials'),
+                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentials')
                 ]){
                         echo "hello"
 

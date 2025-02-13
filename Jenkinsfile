@@ -32,13 +32,13 @@ pipeline {
             steps {
                 script{
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
-                    if(env.BRANCH_NAME == 'master'){
+                    if(BRANCH_NAME == 'master'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
-                    } else if(env.BRANCH_NAME == 'qa'){
+                    } else if(BRANCH_NAME == 'qa'){
                         envClientCredentials = env.CLIENT_QA_CREDENTIALS
-                    } else if(env.BRANCH_NAME == 'stage'){
+                    } else if(BRANCH_NAME == 'stage'){
                         envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
-                    } else if(env.BRANCH_NAME == 'main'){
+                    } else if(BRANCH_NAME == 'main'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
                     }
                 
@@ -51,15 +51,15 @@ pipeline {
                         echo "hello"
 
                         //print the first name of the envClientCredntials here
-                        if(env.BRANCH_NAME == 'develop'){
+                        if(BRANCH_NAME == 'develop'){
                             echo "Credentials of DEV"
-                        } else if(env.BRANCH_NAME == 'qa'){
+                        } else if(BRANCH_NAME == 'qa'){
                             echo "Credentials of QA"
-                        } else if(env.BRANCH_NAME == 'stage'){
+                        } else if(BRANCH_NAME == 'stage'){
                             echo "Credentials of STAGE"
-                        } else if(env.BRANCH_NAME == 'master'){
+                        } else if(BRANCH_NAME == 'master'){
                             echo "Credentials of PROD"
-                        } else if(env.BRANCH_NAME == 'main'){
+                        } else if(BRANCH_NAME == 'main'){
                             echo "Credentials of Prod"
                         }
                     

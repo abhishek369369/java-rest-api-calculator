@@ -38,6 +38,8 @@ pipeline {
                         envClientCredentials = env.CLIENT_QA_CREDENTIALS
                     } else if(env.BRANCH_NAME == 'stage'){
                         envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
+                    } else if(env.BRANCH_NAME == 'main'){
+                        envClientCredentials = env.CLIENT_PROD_CREDENTIALS
                     }
                 
                 withCredentials([
@@ -57,6 +59,8 @@ pipeline {
                             echo "Credentials of STAGE"
                         } else if(env.BRANCH_NAME == 'master'){
                             echo "Credentials of PROD"
+                        } else if(env.BRANCH_NAME == 'main'){
+                            echo "Credentials of Prod"
                         }
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {

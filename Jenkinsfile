@@ -49,7 +49,7 @@ pipeline {
                     string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentials'),
                     string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentials')
                 ]){
-                        echo "hello 2"
+                        
 
                         if(env.BRANCH_NAME == 'develop'){
                             echo "Credentials of DEV"
@@ -62,6 +62,7 @@ pipeline {
                         } else if(env.BRANCH_NAME == 'main'){
                             echo "Credentials of Prod"
                         }
+                        echo "hello 2"
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                             if(params.run_tests == 'yes'){

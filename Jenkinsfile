@@ -32,6 +32,11 @@ pipeline {
             steps {
                 script{
                     echo "hello 1"
+                    def branch_name = 'noBranch'
+                    if(env.BRANCH_NAME){
+                        branch_name = env.BRANCH_NAME
+                    }
+                    echo "Branch name is : ${branch_name}"
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
                     if(env.BRANCH_NAME == 'master'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS

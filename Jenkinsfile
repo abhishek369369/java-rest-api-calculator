@@ -41,7 +41,10 @@ pipeline {
                     }
                 
                 withCredentials([
-                    file(credentialsId: envClientCredentials, variable: 'SECRET_FILE')
+                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'dev_variable'),
+                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'qa_variable'),
+                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'stage_variable'),
+                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'prod_variable')
                 ]){
                         echo "hello"
 

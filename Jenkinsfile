@@ -31,6 +31,12 @@ pipeline {
             
             steps {
                 script{
+                    echo "hello 1"
+                    def branch_name = 'noBranch'
+                    if(env.BRANCH_NAME){
+                        branch_name = env.BRANCH_NAME
+                    }
+                    echo "Branch name is : ${branch_name}"
                     def envClientCredentials = env.CLIENT_DEV_CREDENTIALS;
                     if(env.BRANCH_NAME == 'master'){
                         envClientCredentials = env.CLIENT_PROD_CREDENTIALS
@@ -38,14 +44,18 @@ pipeline {
                         envClientCredentials = env.CLIENT_QA_CREDENTIALS
                     } else if(env.BRANCH_NAME == 'stage'){
                         envClientCredentials = env.CLIENT_STAGE_CREDENTIALS
+                    } else if(env.BRANCH_NAME == 'main'){
+                        envClientCredentials = env.CLIENT_PROD_CREDENTIALS
                     }
                 
                 withCredentials([
-                    file(credentialsId: envClientCredentials, variable: 'SECRET_FILE')
+                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'lumberfi-clients-dev-credentials'),
+                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'lumberfi-clients-qa-credentials'),
+                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentials'),
+                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentials')
                 ]){
-                        echo "hello"
+                        
 
-                        //print the first name of the envClientCredntials here
                         if(env.BRANCH_NAME == 'develop'){
                             echo "Credentials of DEV"
                         } else if(env.BRANCH_NAME == 'qa'){
@@ -54,7 +64,10 @@ pipeline {
                             echo "Credentials of STAGE"
                         } else if(env.BRANCH_NAME == 'master'){
                             echo "Credentials of PROD"
+                        } else if(env.BRANCH_NAME == 'main'){
+                            echo "Credentials of Prod"
                         }
+                        echo "hello 2"
                     
                         catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                             if(params.run_tests == 'yes'){

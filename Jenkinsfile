@@ -49,10 +49,10 @@ pipeline {
                     }
                 
                 withCredentials([
-                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'lumberfi-clients-dev-credentialss'),
-                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'lumberfi-clients-qa-credentialss'),
-                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentialss'),
-                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentialss')
+                    string(credentialsId: "${CLIENT_DEV_CREDENTIALS}", variable: 'lumberfi-clients-dev-credentialsss'),
+                    string(credentialsId: "${CLIENT_QA_CREDENTIALS}", variable: 'lumberfi-clients-qa-credentialsss'),
+                    string(credentialsId: "${CLIENT_STAGE_CREDENTIALS}", variable: 'lumberfi-clients-stage-credentialsss'),
+                    string(credentialsId: "${CLIENT_PROD_CREDENTIALS}", variable: 'lumberfi-clients-prod-credentialsss')
                 ]){
                         
 
